@@ -1,0 +1,206 @@
+Create First Activity to accept information like Student First Name, Middle Name, Last Name, Date of birth, Address, Email ID and display all information on Second Activity when user click on Submit button.
+
+xml1
+<?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="25dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ass1 Q3 Student Information."
+        android:textSize="20dp"
+        android:layout_marginTop="20sp"
+        android:textStyle="bold">
+    </TextView>
+
+
+    <EditText
+        android:id="@+id/fn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="first_name"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/midn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Middle Name"
+        android:textStyle="bold"
+        android:textSize="20dp">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/ln"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:hint="Last Name"
+        android:textSize="20dp"/>
+
+    <EditText
+      android:id="@+id/dof"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+        android:textStyle="bold"
+      android:hint="Date of birth"
+      android:inputType="date"
+      android:textSize="20sp"/>
+
+    <EditText
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:hint="Address"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/eid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="EMAIL-ID"
+        android:textStyle="bold"
+        android:inputType="textEmailAddress"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="SUBMIT"
+        android:onClick="submitData">
+
+    </Button>
+
+</LinearLayout>
+
+1 java
+
+package com.example.studentinformation;
+
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText e1,e2,e3,e4,e5,e6;
+    Button btn;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        e1 = findViewById(R.id.fn);
+        e2 = findViewById(R.id.midn);
+        e3 = findViewById(R.id.ln);
+        e4 = findViewById(R.id.dof);
+        e5 = findViewById(R.id.add);
+        e6 = findViewById(R.id.eid);
+        btn = findViewById(R.id.submit);
+
+    }
+        public void submitData(View view)
+        {
+            String str1 = e1.getText().toString();
+            String str2 = e2.getText().toString();
+            String str3 = e3.getText().toString();
+            String str4 = e4.getText().toString();
+            String str5 = e5.getText().toString();
+            String str6 = e6.getText().toString();
+
+            Toast.makeText(getApplicationContext(),"Submit Button Click",Toast.LENGTH_SHORT).show();
+
+            String str = "First Name :" +str1+ "\n Middle Name :" +str2+ "\n Last Name :" +str3+ "\n Date of Birth :" +str4+ "\n Address :" +str5+ "\n Email-ID :" +str6;
+
+            Intent i = new Intent(this,Student2activity.class);
+            i.putExtra("msg",str);
+            startActivity(i);
+
+        }
+
+
+}
+
+
+2 xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="25dp"
+        android:text="Student Information"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textSize="30dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/ed1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:fontFamily="serif-monospace">
+
+    </TextView>
+
+</LinearLayout>
+
+2 java
+
+package com.example.studentinformation;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.widget.TextView;
+import android.os.Bundle;
+
+public class Student2activity extends AppCompatActivity {
+
+    TextView ans;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_student2activity);
+
+       ans = findViewById(R.id.ed1);
+       Intent i = getIntent();
+       String str = i.getStringExtra("msg");
+       ans.setText(str);
+
+
+    }
+}
